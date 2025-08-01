@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Big Question 💕</title>
+<style>
+  body {
+    font-family: 'Comic Sans MS', cursive, Arial, sans-serif;
+    background: linear-gradient(135deg, #ffe5ec, #ffc2d1, #ffb3d1);
+    margin: 0; 
+    padding: 30px;
+    text-align: center;
+    color: #6d496f;
+    overflow-x: hidden;
+    min-height: 100vh;
+    position: relative;
+  }
+
+  .main-container {
+    position: relative;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 30px;
+    padding: 40px;
+    margin: 50px auto;
+    max-width: 600px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+  }
+
+  h1 {
+    font-size: 2.5em;
+    margin-bottom: 30px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+
+  .button-container {
+    margin: 30px 0;
+    position: relative;
+  }
+
+  button {
+    background: linear-gradient(45deg, #f28482, #ff6b81);
+    border: none;
+    border-radius: 25px;
+    padding: 15px 40px;
+    font-size: 20px;
+    cursor: pointer;
+    color: white;
+    margin: 10px 15px;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(242, 132, 130, 0.4);
+    position: relative;
+    overflow: hidden;
+  }
+
+  button:hover {
+    background: linear-gradient(45deg, #e63946, #ff4757);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(242, 132, 130, 0.6);
+  }
+
+  button:active {
+    transform: translateY(0);
+  }
+
+  button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.5s;
+  }
+
+  button:hover::before {
+    left: 100%;
+  }
+
+  #noButton {
+    background: linear-gradient(45deg, #6c757d, #495057);
+    position: relative;
+    transition: all 0.3s ease;
+  }
+
+  #noButton:hover {
+    background: linear-gradient(45deg, #495057, #343a40);
+    transform: translateX(20px);
+  }
+
+  .heart {
+    position: fixed;
+    width: 20px; height: 20px;
+    background-color: #ff6b81;
+    transform: rotate(45deg);
+    animation: float 5s linear forwards;
+    z-index: 1;
+  }
+
+  .heart::before,
+  .heart::after {
+    content: "";
+    position: absolute;
+    width: 20px; height: 20px;
+    background-color: #ff6b81;
+    border-radius: 50%;
+  }
+
+  .heart::before {
+    top: -10px; left: 0;
+  }
+
+  .heart::after {
+    left: -10px; top: 0;
+  }
+
+  @keyframes float {
+    0% { 
+      opacity: 1; 
+      transform: translateY(0) rotate(45deg) scale(0.5); 
+    }
+    50% { 
+      transform: translateY(-350px) rotate(45deg) scale(1); 
+    }
+    100% { 
+      opacity: 0; 
+      transform: translateY(-700px) rotate(45deg) scale(0.5); 
+    }
+  }
+
+  .sparkle {
+    position: fixed;
+    width: 4px;
+    height: 4px;
+    background: #ffd700;
+    border-radius: 50%;
+    animation: sparkle 3s linear forwards;
+    z-index: 1;
+  }
+
+  @keyframes sparkle {
+    0% { opacity: 1; transform: scale(0); }
+    50% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0; transform: scale(0); }
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 12px 25px;
+    background: linear-gradient(45deg, #f28482, #ff6b81);
+    color: white;
+    border-radius: 25px;
+    text-decoration: none;
+    font-size: 18px;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(242, 132, 130, 0.4);
+  }
+
+  .back-link:hover {
+    background: linear-gradient(45deg, #e63946, #ff4757);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(242, 132, 130, 0.6);
+  }
+
+  .cute-message {
+    margin: 20px 0;
+    font-size: 1.2em;
+    font-style: italic;
+    color: #8b5a8c;
+    opacity: 0;
+    animation: fadeIn 2s ease-in 1s forwards;
+  }
+
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+
+  .emoji-rain {
+    position: fixed;
+    top: -50px;
+    font-size: 30px;
+    animation: emojiRain 4s linear forwards;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  @keyframes emojiRain {
+    to {
+      transform: translateY(120vh) rotate(360deg);
+      opacity: 0;
+    }
+  }
+
+  .celebration {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 100px;
+    z-index: 1000;
+    animation: celebrate 2s ease-in-out;
+    pointer-events: none;
+  }
+
+  @keyframes celebrate {
+    0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 0; }
+    50% { transform: translate(-50%, -50%) scale(1.2) rotate(180deg); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(1) rotate(360deg); opacity: 0; }
+  }
+
+  .bounce-text {
+    display: inline-block;
+    animation: bounce 1s infinite alternate;
+  }
+
+  @keyframes bounce {
+    to { transform: translateY(-10px); }
+  }
+
+  .nervous-text {
+    color: #ff6b81;
+    font-weight: bold;
+    animation: nervous 0.5s infinite alternate;
+  }
+
+  @keyframes nervous {
+    to { transform: scale(1.05); }
+  }
+</style>
+</head>
+<body>
+
+<div class="main-container">
+  <h1>
+    <span class="bounce-text">W</span><span class="bounce-text">i</span><span class="bounce-text">l</span><span class="bounce-text">l</span> 
+    <span class="bounce-text">y</span><span class="bounce-text">o</span><span class="bounce-text">u</span> 
+    <span class="bounce-text">b</span><span class="bounce-text">e</span> 
+    <span class="bounce-text">m</span><span class="bounce-text">y</span> 
+    <span class="bounce-text">g</span><span class="bounce-text">i</span><span class="bounce-text">r</span><span class="bounce-text">l</span><span class="bounce-text">f</span><span class="bounce-text">r</span><span class="bounce-text">i</span><span class="bounce-text">e</span><span class="bounce-text">n</span><span class="bounce-text">d</span><span class="bounce-text">?</span> 💞
+  </h1>
+  
+  <div class="cute-message">
+    <span class="nervous-text">*nervous butterfly sounds* 🦋</span>
+  </div>
+
+  <div class="button-container">
+    <button onclick="accept()" onmouseover="playHoverSound()">Yes! 💖</button>
+    <button onclick="accept()" onmouseover="playHoverSound()">Absolutely Yes! ✨</button>
+    <button onclick="accept()" onmouseover="playHoverSound()">Obviously Yes! 🌟</button>
+    <button id="noButton" onclick="handleNo()" onmouseover="runAway()">No... 😢</button>
+  </div>
+
+  <div id="encouragement" style="margin-top: 20px; font-style: italic; color: #8b5a8c; display: none;">
+    <p>Come on... just one little "yes"? 🥺</p>
+  </div>
+
+  <br><a href="menu.html" class="back-link" onclick="goBack()">Back to Menu</a>
+</div>
+
+<script>
+  // Remove localStorage dependency - just continue with the experience
+  let hasRunAway = false;
+  let noButtonClicks = 0;
+  
+  // Stagger the bounce animation for letters
+  document.querySelectorAll('.bounce-text').forEach((letter, index) => {
+    letter.style.animationDelay = `${index * 0.1}s`;
+  });
+
+  function accept() {
+    // Create celebration effect
+    const celebration = document.createElement('div');
+    celebration.className = 'celebration';
+    celebration.innerHTML = '🎉💖🎊';
+    document.body.appendChild(celebration);
+    
+    setTimeout(() => celebration.remove(), 2000);
+    
+    // Trigger confetti effect
+    createConfetti();
+    
+    // Multiple happy alerts with delays
+    setTimeout(() => {
+      alert("You just made me the happiest person alive! 💖");
+    }, 100);
+    
+    setTimeout(() => {
+      alert("I'm literally crying tears of joy right now! 😭💕");
+    }, 2000);
+    
+    
+    // Change page theme to celebration mode
+    document.body.style.background = 'linear-gradient(135deg, #ff9a9e, #fecfef, #fecfef)';
+  }
+
+  function handleNo() {
+    noButtonClicks++;
+    const encouragement = document.getElementById('encouragement');
+    
+    if (noButtonClicks === 1) {
+      alert("Wait, did you mean to click that? 🤔");
+      encouragement.style.display = 'block';
+    } else if (noButtonClicks === 2) {
+      alert("Are you sure? I can learn your favourite songs for you!");
+      encouragement.innerHTML = "<p>I also know all the words to 'Never Gonna Give You Up' 🎵</p>";
+    } else if (noButtonClicks === 3) {
+      alert("I'll get you icecream without you asking! 🤪");
+      encouragement.innerHTML = "<p>Plus I'm really good at opening pickle jars! 🥒💪</p>";
+    } else {
+      alert("Fine, but you'll missing out on my sexy gym snaps!");
+      // Make the No button progressively smaller and harder to click
+      const noBtn = document.getElementById('noButton');
+      noBtn.style.transform = `scale(${1 - (noButtonClicks * 0.1)})`;
+    }
+  }
+
+  function runAway() {
+    if (!hasRunAway) {
+      hasRunAway = true;
+      const noBtn = document.getElementById('noButton');
+      noBtn.style.position = 'absolute';
+      noBtn.style.left = Math.random() * (window.innerWidth - 200) + 'px';
+      noBtn.style.top = Math.random() * (window.innerHeight - 100) + 'px';
+      
+      setTimeout(() => {
+        alert("Hey! Come back here! 😂");
+      }, 500);
+    }
+  }
+
+  function playHoverSound() {
+    // Create a brief visual feedback since we can't play actual sounds
+    const sparkles = document.createElement('div');
+    sparkles.innerHTML = '✨';
+    sparkles.style.position = 'fixed';
+    sparkles.style.left = Math.random() * window.innerWidth + 'px';
+    sparkles.style.top = Math.random() * window.innerHeight + 'px';
+    sparkles.style.fontSize = '20px';
+    sparkles.style.pointerEvents = 'none';
+    sparkles.style.zIndex = '1000';
+    sparkles.style.animation = 'sparkle 1s linear forwards';
+    document.body.appendChild(sparkles);
+    
+    setTimeout(() => sparkles.remove(), 1000);
+  }
+
+  function createHearts() {
+    setInterval(() => {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.style.left = Math.random() * window.innerWidth + "px";
+      heart.style.top = window.innerHeight + 20 + "px";
+      heart.style.animationDuration = (3 + Math.random() * 3) + "s";
+      
+      // Random heart colors
+      const colors = ['#ff6b81', '#ff4757', '#ff3838', '#ff6348', '#ff7675'];
+      heart.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+      
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 6000);
+    }, 300);
+  }
+
+  function createSparkles() {
+    setInterval(() => {
+      const sparkle = document.createElement("div");
+      sparkle.classList.add("sparkle");
+      sparkle.style.left = Math.random() * window.innerWidth + "px";
+      sparkle.style.top = Math.random() * window.innerHeight + "px";
+      document.body.appendChild(sparkle);
+      setTimeout(() => sparkle.remove(), 3000);
+    }, 500);
+  }
+
+  function createConfetti() {
+    const emojis = ['🎉', '🎊', '💖', '💕', '💘', '🌟', '✨', '🎈', '🌈', '🦄'];
+    
+    for (let i = 0; i < 20; i++) {
+      setTimeout(() => {
+        const emoji = document.createElement('div');
+        emoji.className = 'emoji-rain';
+        emoji.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+        emoji.style.left = Math.random() * window.innerWidth + 'px';
+        emoji.style.animationDuration = (2 + Math.random() * 3) + 's';
+        document.body.appendChild(emoji);
+        
+        setTimeout(() => emoji.remove(), 5000);
+      }, i * 100);
+    }
+  }
+
+  function goBack() {
+    alert("Thanks for stopping by! Come back anytime! 💕");
+    // Since we can't navigate to menu.html, just reload or show a message
+    location.reload();
+  }
+
+  // Add some random encouraging messages
+  const encouragingMessages = [
+    "You look extra beautiful today! ✨",
+    "Did I mention you have amazing taste in websites? 😉",
+    "Fun fact: Scientists say 'Yes' is the most beautiful word! 🔬",
+  ];
+
+  setTimeout(() => {
+    const randomMessage = encouragingMessages[Math.floor(Math.random() * encouragingMessages.length)];
+    const messageDiv = document.createElement('div');
+    messageDiv.innerHTML = randomMessage;
+    messageDiv.style.position = 'fixed';
+    messageDiv.style.bottom = '20px';
+    messageDiv.style.right = '20px';
+    messageDiv.style.background = 'rgba(255, 255, 255, 0.9)';
+    messageDiv.style.padding = '10px 15px';
+    messageDiv.style.borderRadius = '20px';
+    messageDiv.style.fontSize = '14px';
+    messageDiv.style.color = '#6d496f';
+    messageDiv.style.boxShadow = '0 5px 15px rgba(0,0,0,0.1)';
+    messageDiv.style.zIndex = '1000';
+    messageDiv.style.animation = 'fadeIn 1s ease-in';
+    document.body.appendChild(messageDiv);
+    
+    setTimeout(() => messageDiv.remove(), 5000);
+  }, 3000);
+
+  // Start the magic!
+  createHearts();
+  createSparkles();
+  
+  // Add some playful cursor trail
+  document.addEventListener('mousemove', (e) => {
+    if (Math.random() < 0.1) { // Only occasionally create trails
+      const trail = document.createElement('div');
+      trail.innerHTML = '💕';
+      trail.style.position = 'fixed';
+      trail.style.left = e.clientX + 'px';
+      trail.style.top = e.clientY + 'px';
+      trail.style.fontSize = '12px';
+      trail.style.pointerEvents = 'none';
+      trail.style.zIndex = '1';
+      trail.style.animation = 'sparkle 2s linear forwards';
+      document.body.appendChild(trail);
+      
+      setTimeout(() => trail.remove(), 2000);
+    }
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Our Beautiful Memories</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: #333;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 10;
+  }
+  
+  .header {
+    text-align: center;
+    margin-bottom: 40px;
+    animation: fadeInDown 1s ease-out;
+  }
+  
+  .header h1 {
+    color: #8b5d7a;
+    font-size: 36px;
+    font-weight: 300;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    text-shadow: 0 3px 15px rgba(139, 93, 122, 0.3);
+  }
+  
+  .header p {
+    color: #666;
+    font-size: 18px;
+    font-style: italic;
+  }
+  
+  .memory-section {
+    margin-bottom: 50px;
+    animation: fadeInUp 1s ease-out;
+  }
+  
+  .section-title {
+    text-align: center;
+    font-size: 28px;
+    color: #8b5d7a;
+    margin-bottom: 30px;
+    font-weight: 300;
+    letter-spacing: 1px;
+    position: relative;
+  }
+  
+  .section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 3px;
+    background: linear-gradient(135deg, #ff9a9e, #fecfef);
+    border-radius: 2px;
+  }
+  
+  .video-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+    margin-bottom: 50px;
+  }
+  
+  .video-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s ease;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .video-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.6s ease;
+    z-index: 1;
+  }
+  
+  .video-card:hover::before {
+    left: 100%;
+  }
+  
+  .video-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+  }
+  
+  .video-placeholder {
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(135deg, #ff9a9e, #fecfef);
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 2;
+  }
+  
+  .video-placeholder:hover {
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+    transform: scale(1.02);
+  }
+  
+  .video-card h3 {
+    text-align: center;
+    margin-top: 15px;
+    color: #8b5d7a;
+    font-weight: 400;
+    font-size: 18px;
+    position: relative;
+    z-index: 2;
+  }
+  
+  .photo-gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    margin-bottom: 50px;
+  }
+  
+  .photo-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 15px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s ease;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .photo-card:hover {
+    transform: translateY(-8px) rotate(1deg);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+  }
+  
+  .photo-placeholder {
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(45deg, #a8edea, #fed6e3);
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+  
+  .photo-card:hover .photo-placeholder {
+    transform: scale(1.05);
+  }
+  
+  .photo-card h3 {
+    text-align: center;
+    margin-top: 12px;
+    color: #8b5d7a;
+    font-weight: 400;
+    font-size: 16px;
+  }
+  
+  .collage-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 30px;
+    margin-bottom: 50px;
+  }
+  
+  .collage-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 25px;
+    padding: 25px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    transition: all 0.4s ease;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+  
+  .collage-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
+  }
+  
+  .collage-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 10px;
+    height: 300px;
+    border-radius: 15px;
+    overflow: hidden;
+  }
+  
+  .collage-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+  
+  .collage-item:nth-child(1) {
+    background: linear-gradient(45deg, #ff9a9e, #fecfef);
+  }
+  
+  .collage-item:nth-child(2) {
+    background: linear-gradient(45deg, #a8edea, #fed6e3);
+  }
+  
+  .collage-item:nth-child(3) {
+    background: linear-gradient(45deg, #d299c2, #fef9d7);
+  }
+  
+  .collage-item:nth-child(4) {
+    background: linear-gradient(45deg, #89f7fe, #66a6ff);
+  }
+  
+  .collage-item:hover {
+    transform: scale(1.05);
+    z-index: 2;
+  }
+  
+  .collage-card h3 {
+    text-align: center;
+    margin-top: 20px;
+    color: #8b5d7a;
+    font-weight: 400;
+    font-size: 20px;
+  }
+  
+  .timeline-section {
+    margin-bottom: 50px;
+  }
+  
+  .timeline {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .timeline::after {
+    content: '';
+    position: absolute;
+    width: 4px;
+    background: linear-gradient(135deg, #ff9a9e, #fecfef);
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    margin-left: -2px;
+    border-radius: 2px;
+  }
+  
+  .timeline-item {
+    padding: 20px 40px;
+    position: relative;
+    background-color: inherit;
+    width: 50%;
+    animation: fadeInUp 1s ease-out;
+  }
+  
+  .timeline-item::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    right: -10px;
+    background: linear-gradient(135deg, #ff9a9e, #fecfef);
+    border: 4px solid white;
+    top: 30px;
+    border-radius: 50%;
+    z-index: 1;
+    box-shadow: 0 4px 15px rgba(255, 154, 158, 0.4);
+  }
+  
+  .timeline-item:nth-child(even) {
+    left: 50%;
+  }
+  
+  .timeline-item:nth-child(even)::after {
+    left: -10px;
+  }
+  
+  .timeline-content {
+    padding: 20px 25px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    position: relative;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+  }
+  
+  .timeline-content:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+  }
+  
+  .timeline-content h3 {
+    color: #8b5d7a;
+    font-size: 18px;
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+  
+  .timeline-content p {
+    color: #666;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  
+  .memory-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 50px;
+  }
+  
+  .stat-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 30px 20px;
+    text-align: center;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s ease;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+  
+  .stat-card:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+  }
+  
+  .stat-number {
+    font-size: 36px;
+    font-weight: bold;
+    color: #8b5d7a;
+    margin-bottom: 10px;
+    background: linear-gradient(135deg, #ff9a9e, #8b5d7a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .stat-label {
+    font-size: 16px;
+    color: #666;
+    font-weight: 500;
+  }
+  
+  .back-button {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: linear-gradient(135deg, #ff9a9e, #fecfef);
+    border: none;
+    border-radius: 50px;
+    padding: 15px 25px;
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 600;
+    box-shadow: 0 10px 30px rgba(255, 154, 158, 0.4);
+    transition: all 0.3s ease;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .back-button:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 15px 40px rgba(255, 154, 158, 0.6);
+  }
+  
+  .floating-hearts {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+  }
+  
+  .heart {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background: rgba(255, 182, 193, 0.4);
+    transform: rotate(45deg);
+    animation: floatHeart 12s infinite linear;
+  }
+  
+  .heart::before,
+  .heart::after {
+    content: '';
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background: rgba(255, 182, 193, 0.4);
+    border-radius: 50%;
+  }
+  
+  .heart::before {
+    top: -7px;
+    left: 0;
+  }
+  
+  .heart::after {
+    left: -7px;
+    top: 0;
+  }
+
+  .photo-card {
+      text-align: center;
+    }
+
+    .photo-placeholder {
+      border: 2px dashed #999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      cursor: pointer;
+      margin: auto;
+      background-color: #f0f0f0;
+    }
+
+    /* Modal styles */
+    .media-modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .media-content img {
+      max-width: 50%;
+      max-height: 40%;
+      border-radius: 10px;
+    }
+
+    .media-close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 40px;
+      color: white;
+      cursor: pointer;
+    }
+
+    .media-content {
+      position: relative;
+      text-align: center;
+    }
+
+  
+  @keyframes floatHeart {
+    0% {
+      transform: translateY(100vh) rotate(45deg) scale(0);
+      opacity: 0;
+    }
+    10% {
+      opacity: 1;
+    }
+    90% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(-100px) rotate(45deg) scale(1);
+      opacity: 0;
+    }
+  }
+  
+  @keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .video-gallery,
+    .photo-gallery {
+      grid-template-columns: 1fr;
+    }
+    
+    .collage-section {
+      grid-template-columns: 1fr;
+    }
+    
+    .header h1 {
+      font-size: 28px;
+    }
+    
+    .timeline::after {
+      left: 20px;
+    }
+    
+    .timeline-item {
+      width: 100%;
+      padding-left: 50px;
+      padding-right: 20px;
+    }
+    
+    .timeline-item::after {
+      left: 10px;
+    }
+    
+    .timeline-item:nth-child(even) {
+      left: 0%;
+    }
+    
+    .timeline-item:nth-child(even)::after {
+      left: 10px;
+    }
+    
+    .memory-stats {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>
+</head>
+<body>
+
+<audio id="bgMusic" src="your-song.m4a" preload="auto" loop></audio>
+
+<div class="floating-hearts"></div>
+
+<div class="container">
+  <div class="header">
+    <h1>Our Beautiful Memories 💕</h1>
+    <p>Every moment we shared, captured forever</p>
+  </div>
+
+  <!-- Memory Statistics -->
+  <div class="memory-section">
+    <h2 class="section-title">Our Journey in Numbers ✨</h2>
+    <div class="memory-stats">
+      <div class="stat-card">
+        <div class="stat-number">750+</div>
+        <div class="stat-label">Days Together</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">∞</div>
+        <div class="stat-label">Smiles Shared</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">100+</div>
+        <div class="stat-label">Photos Taken</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">1</div>
+        <div class="stat-label">True Love</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Video Section
+  <div class="memory-section">
+    <h2 class="section-title">Our Video Memories 🎬</h2>
+    <div class="video-gallery">
+      <div class="video-card">
+        <div class="video-placeholder">
+          🎥<br>Our First Date<br>Video
+        </div>
+        <h3>First Coffee Together</h3>
+      </div>
+      
+      <div class="video-card">
+        <div class="video-placeholder">
+          🎬<br>Anniversary<br>Celebration
+        </div>
+        <h3>One Month Anniversary</h3>
+      </div>
+      
+      <div class="video-card">
+        <div class="video-placeholder">
+          📹<br>Surprise<br>Moments
+        </div>
+        <h3>Random Sweet Moments</h3>
+      </div>
+      
+      <div class="video-card">
+        <div class="video-placeholder">
+          🎭<br>Funny<br>Bloopers
+        </div>
+        <h3>Our Silly Side</h3>
+      </div>
+    </div>
+  </div> -->
+
+  <!-- Timeline Section -->
+  <div class="memory-section">
+    <h2 class="section-title">Our Love Timeline 💖</h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <h3>Matched</h3>
+          <p>We matched on <b>July 9, 2023,</b>
+two strangers suddenly talking like we’d known each other forever.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <h3>Confession</h3>
+          <p>On August 2,
+<b>“Falling in Love at a Coffee Shop”</b> became our song,
+and so did my heart—yours.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <h3>First Date </h3>
+          <p><b>August 19</b>, our first date,
+and the very next day,
+I asked you to be mine—
+and you were.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <h3>Best Time I had</h3>
+          <p> <b>September 15</b>, you came to Panvel—
+a day I can still feel in my chest.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <h3>Not so pleasant</h3>
+          <p>Then came the storms…
+our <b>Doomsday</b>,
+moments where love hurt,
+but somehow, we always found our way back.</p>
+        </div>
+      </div>
+       <div class="timeline-item">
+        <div class="timeline-content">
+          <h3>Coping</h3>
+          <p> we still found happiness,
+still met, still loved—wildly and truly.</p>
+        </div>
+      </div>
+       <div class="timeline-item">
+        <div class="timeline-content">
+          <h3>Doomsday 2?</h3>
+          <p> By <b>December</b>, life spun fast and messy again.
+And now it hits me—
+eight long months without seeing you.
+Eight months of missing you in the quiet,
+loving you from a distance,
+holding on to us.</p>
+        </div>
+      </div>
+       <div class="timeline-item">
+        <div class="timeline-content">
+          <h3>Healing</h3>
+          <p> Through every rough patch,
+one truth stays unbroken—
+I choose us.
+And I know we’ll find our way back
+to brighter, softer days together. ❤️‍🩹</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <h3>Today</h3>
+          <p>And today, i.e <b>July 31st 2025</b>,
+as I write this,
+I feel that same spark again—
+the kind that makes me want
+to make new memories with you,
+the kind that reminds me how much I love what we have. ❤️</p>
+        </div>
+      </div>
+       <div class="timeline-item">
+        <div class="timeline-content">
+          <h3 style="color: rgb(127, 8, 8);">P.S.</h3>
+          <p>This isn’t a perfectly detailed timeline—just a little glimpse of what we’ve been through.
+A reminder of our journey, our highs and lows,
+and everything that makes “us” special.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Photo Gallery Section -->
+  <div class="memory-section">
+    <h2 class="section-title">Photo Gallery 📸</h2>
+    <div class="photo-gallery">
+     <div class="photo-card">
+  <div class="photo-placeholder" data-src="images/firstdate.jpg">
+    𖨆♡⃛𖨆
+  </div>
+  <h3>Our First Date</h3>
+</div>
+
+      
+      <div class="photo-card">
+        <div class="photo-placeholder" data-src="images/hand.png">
+          🫱🏻‍🫲🏼
+        </div>
+        <h3>Anchored In You</h3>
+      </div>
+      
+      <div class="photo-card">
+        <div class="photo-placeholder" data-src="images/silly.jpg">
+          😋
+        </div>
+        <h3>Us Being Silly</h3>
+      </div>
+      
+      <div class="photo-card">
+        <div class="photo-placeholder" data-src="images/discord.jpg">
+          👩🏻‍💻👨🏻‍💻
+        </div>
+        <h3>E-Dates</h3>
+      </div>
+      
+      <div class="photo-card">
+        <div class="photo-placeholder" data-src="images/MY pretty mess.jpg">
+          🌸
+        </div>
+        <h3>My Girl</h3>
+      </div> 
+      
+      <div class="photo-card">
+        <div class="photo-placeholder" data-src="images/silhouette.jpg">
+          ˚‧｡⋆🌻⋆｡‧˚
+        </div>
+        <h3>Silhouette</h3>
+      </div>
+    </div>
+  </div>
+
+  
+
+ 
+
+ <!-- Modal -->
+  <div id="mediaModal" class="media-modal">
+    <span class="media-close">&times;</span>
+    <div class="media-content">
+      <img id="modalImage" />
+    </div>
+  </div>
+
+<a href="menu.html" class="back-button">
+  ← Back to Menu
+</a>
+
+<script>
+  // Check unlock status
+  const unlocked = localStorage?.getItem('unlocked') === 'true';
+  if (!unlocked) {
+    alert("Please unlock first!");
+    window.location.href = 'index.html';
+  }
+
+  // Create floating hearts
+  function createFloatingHearts() {
+    const heartsContainer = document.querySelector('.floating-hearts');
+    
+    setInterval(() => {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.style.left = Math.random() * 100 + '%';
+      heart.style.animationDelay = Math.random() * 2 + 's';
+      heart.style.animationDuration = (8 + Math.random() * 4) + 's';
+      heartsContainer.appendChild(heart);
+      
+      setTimeout(() => {
+        if (heart.parentNode) {
+          heart.parentNode.removeChild(heart);
+        }
+      }, 12000);
+    }, 1200);
+  }
+
+  createFloatingHearts();
+
+  // Background music
+  const music = document.getElementById('bgMusic');
+  music.play().catch(() => {
+    document.body.addEventListener('click', () => music.play(), { once: true });
+  });
+
+  // Add interactive effects to cards
+  const cards = document.querySelectorAll('.video-card, .photo-card, .collage-card, .stat-card');
+  cards.forEach(card => {
+    card.addEventListener('mouseenter', () => {
+      card.style.transform = card.classList.contains('stat-card') 
+        ? 'translateY(-8px) scale(1.03)' 
+        : 'translateY(-10px) scale(1.02)';
+    });
+    
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = 'translateY(0) scale(1)';
+    });
+  });
+
+  // Animate timeline items on scroll
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll('.timeline-item, .stat-card').forEach(item => {
+    item.style.opacity = '0';
+    item.style.transform = 'translateY(30px)';
+    item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(item);
+  });
+
+  // Add click interactions for placeholders
+  document.querySelectorAll('.video-placeholder, .photo-placeholder').forEach(placeholder => {
+    placeholder.addEventListener('click', () => {
+      placeholder.style.transform = 'scale(0.95)';
+      setTimeout(() => {
+        placeholder.style.transform = 'scale(1)';
+      }, 150);
+    });
+  });
+
+
+   const mediaModal = document.getElementById('mediaModal');
+    const modalImage = document.getElementById('modalImage');
+    const closeModal = document.querySelector('.media-close');
+
+    document.querySelectorAll('.photo-placeholder').forEach(el => {
+      el.addEventListener('click', () => {
+        const src = el.getAttribute('data-src');
+        modalImage.src = src;
+        mediaModal.style.display = 'flex';
+      });
+    });
+
+    closeModal.addEventListener('click', () => {
+      mediaModal.style.display = 'none';
+    });
+
+    // Optional: close modal when clicking outside the image
+    mediaModal.addEventListener('click', (e) => {
+      if (e.target === mediaModal) {
+        mediaModal.style.display = 'none';
+      }
+    });
+
+
+</script>
+
+
+
+</body>
+</html>

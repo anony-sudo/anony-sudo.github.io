@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animated Postcard</title>
+    <style>
+       * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .floating-hearts {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+  }
+  
+  .heart {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 182, 193, 0.6);
+    transform: rotate(45deg);
+    animation: float 8s infinite linear;
+  }
+  
+  .heart::before,
+  .heart::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 182, 193, 0.6);
+    border-radius: 50%;
+  }
+  
+  .heart::before {
+    top: -10px;
+    left: 0;
+  }
+  
+  .heart::after {
+    left: -10px;
+    top: 0;
+  }
+  
+  @keyframes float {
+    0% {
+      transform: translateY(100vh) rotate(45deg) scale(0);
+      opacity: 0;
+    }
+    10% {
+      opacity: 1;
+    }
+    90% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(-100px) rotate(45deg) scale(1);
+      opacity: 0;
+    }
+  }
+
+        .container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .postcard {
+            width: 400px;
+            height: 250px;
+            position: relative;
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transition: transform 0.6s ease;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .postcard:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+
+        .postcard.opened {
+            transform: rotateY(180deg);
+        }
+
+        .postcard-side {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+         .postcard-front {
+            background-color: #fbd6e4;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .postcard-heart {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: rgba(255, 255, 255, 0.7);
+            transform: rotate(45deg);
+            animation: heartPulse 3s infinite ease-in-out;
+        }
+
+        .postcard-heart::before,
+        .postcard-heart::after {
+            content: '';
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+        }
+
+        .postcard-heart::before {
+            top: -7.5px;
+            left: 0;
+        }
+
+        .postcard-heart::after {
+            left: -7.5px;
+            top: 0;
+        }
+
+        .postcard-heart:nth-child(1) {
+            top: 20px;
+            left: 30px;
+            animation-delay: 0s;
+        }
+
+        .postcard-heart:nth-child(2) {
+            top: 40px;
+            right: 25px;
+            animation-delay: 0.5s;
+        }
+
+        .postcard-heart:nth-child(3) {
+            bottom: 30px;
+            left: 40px;
+            animation-delay: 1s;
+        }
+
+        .postcard-heart:nth-child(4) {
+            bottom: 50px;
+            right: 35px;
+            animation-delay: 1.5s;
+        }
+
+        .postcard-heart:nth-child(5) {
+            top: 60px;
+            left: 50%;
+            transform: translateX(-50%) rotate(45deg);
+            animation-delay: 2s;
+        }
+
+        .postcard-heart:nth-child(6) {
+            top: 30px;
+            left: 60px;
+            animation-delay: 2.5s;
+        }
+
+        @keyframes heartPulse {
+            0%, 100% { 
+                transform: rotate(45deg) scale(1);
+                opacity: 0.7;
+            }
+            50% { 
+                transform: rotate(45deg) scale(1.2);
+                opacity: 1;
+            }
+        }
+
+
+
+        .postcard-back {
+            background: #f8f9fa;
+            transform: rotateY(180deg);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            color: #333;
+        }
+
+        .title {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+            text-align: center;
+        }
+
+        .lines-area {
+            background-image: repeating-linear-gradient(
+                transparent,
+                transparent 20px,
+                #ddd 20px,
+                #ddd 22px
+            );
+            height: 140px;
+            margin-bottom: 20px;
+        }
+
+        .address-area {
+            border-left: 2px solid #ddd;
+            padding-left: 15px;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .address-area div {
+            margin-bottom: 5px;
+        }
+
+        .letter {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 500px; /* increased width */
+            height: 600px; /* increased height */
+            background: #fdf6e3; /* vintage paper tone */
+            border-radius: 10px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 0;
+            z-index: 1000;
+            padding: 30px 35px;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            pointer-events: none;
+            background-image: repeating-linear-gradient(
+                to bottom,
+                transparent,
+                transparent 28px,
+                rgba(0, 0, 0, 0.05) 29px
+            );
+            font-family: 'Georgia', serif;
+        }
+
+        .letter.show {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .letter-header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 15px;
+        }
+
+        .letter-title {
+        font-size: 2em;
+        font-family: 'Georgia', serif;
+        color: #2c2c2c;
+        margin-bottom: 5px;
+        }
+
+        .letter-date {
+            color: #666;
+            font-style: italic;
+            font-size: 0.9em;
+        }
+
+        .letter-body {
+        line-height: 1.6;
+        font-size: 1em;
+        color: #3b3b3b;
+        max-height: 370px;
+        overflow-y: auto;
+        padding-right: 10px;
+        white-space: pre-line;
+        }
+
+        .letter-body p {
+            margin-bottom: 10px;
+        }
+
+        .signature {
+        font-family: 'Georgia', serif;
+        font-style: italic;
+        font-size: 1em;
+        color: #5a4e3c;
+        margin-top: 20px;
+        text-align: right;
+        }
+
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-button:hover {
+            background: #ee5a24;
+            transform: scale(1.1);
+        }
+
+        .hint {
+            position: absolute;
+            bottom: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgb(0, 0, 0);
+            font-size: 0.9em;
+            opacity: 0.8;
+            animation: pulse 2s infinite;
+            pointer-events: none;
+        }
+
+        .postcard.opened .hint {
+            opacity: 0;
+        }
+
+        @keyframes pulse {
+            0%, 100% { 
+                opacity: 0.8;
+                transform: translateX(-50%) scale(1);
+            }
+            50% { 
+                opacity: 0.4;
+                transform: translateX(-50%) scale(1.05);
+            }
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            opacity: 0;
+            z-index: 999;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .overlay.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="postcard" id="postcard">
+            <div class="postcard-side postcard-front">
+              <div class="postcard-heart"></div>
+              <div class="postcard-heart"></div>
+              <div class="postcard-heart"></div>
+              <div class="postcard-heart"></div>
+              <div class="postcard-heart"></div>
+              <div class="postcard-heart"></div>
+                <div class="title">Hello!</div>
+                <div class="subtitle">You've got mail ✉️</div>
+            </div>
+            <div class="postcard-side postcard-back">
+                <div class="lines-area"></div>
+                <div class="address-area">
+                    <div><strong>To:</strong> BabyMauu </div>
+                    <div><strong>From:</strong> Sid</div>
+                    <div><strong>Date:</strong> July 30, 2025</div>
+                </div>
+            </div>
+            <div class="hint" id="hint">Click to open the postcard</div>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+    
+    <div class="letter" id="letter">
+        <button class="close-button" id="closeBtn">×</button>
+        <div class="letter-header">
+            <div class="letter-title">A Personal Message</div>
+            <div class="letter-date">July 30, 2025</div>
+        </div>
+        <div class="letter-body">
+            <p>Hiii Mauu,</p>
+           <p>As you are already here I’d assume you must have gone through all the previous things one by one and have listened to my stupid cover of “our song”. I actually couldn’t find any real tutorial for that song but come on I tried 😭 and I hope it’s the effort that counts🤪.</p>
+
+<p>So, before starting with this letter (I hope this feels like a letter cuz I tried to make it seem so), I want to tell you that I miss you so so so much and I love you even moree my little cupcake 🧁 😋.</p>
+
+<p>I’m writing this to you on 30th of July, at the verge of the deadline 🥲 and I suppose this is the evening of 31st July when you’re reading this. Close call, no? Not very proud of it but better late than never 👉🏻👈🏻🥹.</p>
+
+<p>Moving forward, I’ve been thinking a lot lately about you—about how you somehow make even the simplest things feel special. Like how a regular day becomes something I actually look forward to, just because I get to talk to you. And your little reactions? They stay with me for hours.</p>
+
+<p>It’s so weird and wonderful how someone can feel like home, even when they’re not around. I always look forward to our video calls—because let’s be honest, every time we VC, it’s hands down the highlight of my day.</p>
+
+<p>Even the 2-minute silent VCs mean the world to me. And don’t you dare ask me to explain it or call it “illogical” again 😡 or I swear, I’ll irritate the hell out of you by video calling you again and again and again—because no matter how many times I do, it’s never enough. I just want to see you more, and more, and more.</p>
+
+<p>You know, I keep thinking about the times we’ve spent together irl so far—whether it was at my place or all those other little spots we’ve hung out at.</p>
+
+<p>I miss those moments so badly. And no, it’s not just about the physical touch or the intimacy we share—it’s the simple things. Like holding your hand, being close to you, just sitting next to you in silence. I miss it all.</p>
+
+<p>The evening walk we had in Pune, Sanam Teri Kasam at my place, or us acting completely crazy while shooting those videos and pictures… uff, I miss you so much, you beautiful little human being.</p>
+
+<p>And I also miss getting you chocolates and Kinder Joys every time we meet. It’s like this unspoken little tradition we’ve made that I never wish to break.</p>
+
+<p>These are the kind of memories that live rent-free in my head. And I wouldn’t trade them for anything. Not even lifetime protein supplies😤💕.</p>
+
+<p>I keep imagining what it’ll feel like the next time I get to see you. I don’t think I’ll even say anything at first—I’ll probably just stare at you like an idiot for a few seconds, trying to believe you’re actually in front of me again. And of course, I’ll have a couple of Kinder Joys hidden somewhere on me because… tradition 😋.</p>
+
+<p>Honestly, I don’t really care what we end up doing—whether we’re just hanging out at my place, walking around aimlessly, grabbing something to eat, or literally doing nothing at all. What matters to me is just being with you. No phones, no distance, no screens in between, just you, right there in front of me.</p>
+
+<p>I’ve realized it’s never really about the plan or the place—it’s about that feeling of being in the same space as you. Breathing the same air, bumping shoulders, sneaking glances… and knowing in that moment, we’re okay. We’re together. And that’s everything.</p>
+
+<p>I just want to say thank you—for being mine, for existing the way you do, and for somehow making everything better just by being in my life. I don’t know what I did right to deserve someone like you, but I’m not letting go.</p>
+
+<p>I hope this letter made you feel even a fraction of what I feel for you. And when we’re finally together again, I’m giving you the longest hug possible. The bone-cracking, don’t-let-go type.</p>
+
+<p>Until then, take care of yourself, my sunshine. Eat well, sleep well, overthink less, and don’t forget there’s someone out here who’s madly, stupidly in love with you 🥺.</p>
+
+        </div>
+        <div class="signature">
+            With warm n virtual hugs,<br>
+            Your Admirer ✨
+        </div>
+    </div>
+
+    <script>
+        const postcard = document.getElementById('postcard');
+        const letter = document.getElementById('letter');
+        const overlay = document.getElementById('overlay');
+        const closeBtn = document.getElementById('closeBtn');
+        const hint = document.getElementById('hint');
+        
+        let isOpen = false;
+
+        postcard.addEventListener('click', function() {
+            if (!isOpen) {
+                openPostcard();
+            }
+        });
+
+        closeBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            closePostcard();
+        });
+
+        overlay.addEventListener('click', function() {
+            closePostcard();
+        });
+
+        function openPostcard() {
+            isOpen = true;
+            postcard.classList.add('opened');
+            
+            // Wait longer to let user see the back of postcard
+            setTimeout(() => {
+                overlay.classList.add('show');
+                letter.classList.add('show');
+            }, 1500);
+        }
+
+        function closePostcard() {
+            letter.classList.remove('show');
+            overlay.classList.remove('show');
+            
+            setTimeout(() => {
+                postcard.classList.remove('opened');
+                isOpen = false;
+            }, 300);
+        }
+
+        // Prevent body scroll when letter is open
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && isOpen) {
+                closePostcard();
+            }
+        });
+    </script>
+</body>
+</html>
